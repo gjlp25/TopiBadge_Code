@@ -16,12 +16,12 @@ display_height = 32
 display = SSD1306_I2C(display_width, display_height, i2c)
 np = neopixel.NeoPixel(machine.Pin(14), 1)
 chase = Pin(12, Pin.OUT)
-chase.value(0)
 timer = Timer(0)
 
 orange = (63, 13, 0)
 green = (0, 63, 0)
 red = (63, 0, 0)
+reset = (0, 0, 0)
 
 def debounce(pin):
     timer.init(mode=Timer.ONE_SHOT, period=200, callback=handle_interrupt)
@@ -39,6 +39,10 @@ def bootup():
     display.fill(0)
     display.blit(fb, 0, 0)
     display.show()
+    
+def reset_np():
+    np[0] = reset
+    np.write()
     
 def httpreq():
         url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=TOI.V&apikey=NYCM7O9QFZZ60VAK"
@@ -99,6 +103,7 @@ btn.irq(debounce, Pin.IRQ_RISING)
     
 
 wm = WifiManager()
+reset_np()
 bootup()
 wm.connect()
 while True:
