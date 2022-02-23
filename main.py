@@ -1,7 +1,7 @@
 import urequests
 from time import sleep
 import ujson
-from machine import Pin, I2C, Timer
+from machine import Pin, I2C, Timer, deepsleep
 from ssd1306 import SSD1306_I2C
 from wifi_manager import WifiManager
 import framebuf
@@ -34,6 +34,7 @@ def handle_interrupt(pin):
     print(prev_price + ' prevTS') #troubleshoot
     print(new_price + ' newTS') #troubleshoot
     led_chase()
+    deep_sleep()
    
 def bootup():
     display.fill(0)
@@ -98,10 +99,13 @@ def led_chase():
     sleep(10)
     chase.value(0)
     
+def deep_sleep():
+    sleep(10)
+    print("Entering Deep Sleep. Press Reset to wake")
+    deepsleep()
     
 btn.irq(debounce, Pin.IRQ_RISING)
     
-
 wm = WifiManager()
 reset_np()
 bootup()
