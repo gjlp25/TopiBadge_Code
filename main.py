@@ -101,6 +101,9 @@ def led_chase():
     
 def deep_sleep():
     sleep(10)
+    np[0] = reset
+    np.write()
+    display.poweroff()
     print("Entering Deep Sleep. Press Reset to wake")
     deepsleep()
     
