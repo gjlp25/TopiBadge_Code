@@ -17,8 +17,6 @@ display = SSD1306_I2C(display_width, display_height, i2c)
 np = neopixel.NeoPixel(machine.Pin(14), 1)
 chase = Pin(12, Pin.OUT)
 timer = Timer(0)
-color = [0, 0, 0]
-increment = 24
 
 orange = (63, 13, 0)
 green = (0, 63, 0)
