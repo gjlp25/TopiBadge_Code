@@ -12,7 +12,7 @@ import utime
 
 class WifiManager:
 
-    def __init__(self, ssid = 'WifiManager', password = 'wifimanager'):
+    def __init__(self, ssid = 'TopiBadge', password = 'wifimanager'):
         self.wlan_sta = network.WLAN(network.STA_IF)
         self.wlan_sta.active(True)
         self.wlan_ap = network.WLAN(network.AP_IF)

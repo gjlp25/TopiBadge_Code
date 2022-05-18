@@ -36,7 +36,7 @@ def handle_interrupt(pin):
     led_chase()
     deep_sleep()
    
-def bootup():
+def show_logo():
     display.fill(0)
     display.blit(fb, 0, 0)
     display.show()
@@ -99,22 +99,55 @@ def led_chase():
     sleep(10)
     chase.value(0)
     
+def press_action():
+    display.rotate(True)
+    display.fill(0)
+    display.text('Press TOI.V', 0, 0, 1)
+    display.text('button for live ', 0, 12, 1)
+    display.text('stock info', 0, 24, 1)
+    display.show()
+    print('Connected!')
+    
+#def mess_not_connected():
+#    display.rotate(True)
+#    display.fill(0)
+#    display.text('Not connected!', 0, 0, 1)
+#    display.text('Connect to TB ', 0, 12, 1)
+#    display.text('Go to 192.168.4.1', 0, 24, 1)
+#    display.show()
+#    print('Connected!')
+    
+def mess_deep_sleep():
+    display.rotate(True)
+    display.fill(0)
+    display.text('Entering deep-', 0, 0, 1)
+    display.text('sleep. Press reset', 0, 12, 1)
+    display.text('to wake', 0, 24, 1)
+    display.show()
+    print("Entering Deep Sleep. Press Reset to wake") #print to screen
+    
 def deep_sleep():
     sleep(10)
+    display.rotate(True)
+    display.fill(0)
+    display.text('Entering deep-', 0, 0, 1)
+    display.text('sleep. Press', 0, 12, 1)
+    display.text('reset to wake', 0, 24, 1)
+    display.show()
+    print("Entering Deep Sleep. Press Reset to wake") #print to screen
+    sleep(3)
     np[0] = reset
     np.write()
     display.poweroff()
-    print("Entering Deep Sleep. Press Reset to wake")
     deepsleep()
     
 btn.irq(debounce, Pin.IRQ_RISING)
     
 wm = WifiManager()
 reset_np()
-bootup()
+show_logo()
 wm.connect()
-while True:
-    if wm.is_connected():
+if wm.is_connected() == True:
         sleep(3)
         print_nw_info()
         sleep(3)
@@ -124,12 +157,4 @@ while True:
         display.show()
         print('Connected!')
         sleep(3)
-        bootup()
-        break
-    else:
-        print('Disconnected!')
-        display.rotate(True)
-        display.fill(0)
-        display.text('Disonnected!', 0, 16, 1)
-        display.show()
-    time.sleep(10)
+        press_action()

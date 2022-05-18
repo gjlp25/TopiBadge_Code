@@ -2,6 +2,8 @@ import machine, neopixel
 import time
 
 
+BRIGHTNESS = 1.0
+
 np = neopixel.NeoPixel(machine.Pin(14), 1)
 color = [0, 0, 0]
 increment = 1
@@ -22,10 +24,10 @@ def flash_green():
         if color[1] <= 0:
             color[1] = 0
             increment = 1
+            
 
         np.fill(color)
         np.write()
-        
         
 def flash_red():
     global np, color, increment
@@ -62,8 +64,5 @@ def flash_orange():
         np.fill(color)
         np.write()
         
-
-        
 flash_green()
-
 
