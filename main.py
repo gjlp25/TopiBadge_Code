@@ -107,16 +107,7 @@ def press_action():
     display.text('stock info', 0, 24, 1)
     display.show()
     print('Connected!')
-    
-#def mess_not_connected():
-#    display.rotate(True)
-#    display.fill(0)
-#    display.text('Not connected!', 0, 0, 1)
-#    display.text('Connect to TB ', 0, 12, 1)
-#    display.text('Go to 192.168.4.1', 0, 24, 1)
-#    display.show()
-#    print('Connected!')
-    
+        
 def mess_deep_sleep():
     display.rotate(True)
     display.fill(0)
@@ -128,14 +119,6 @@ def mess_deep_sleep():
     
 def deep_sleep():
     sleep(10)
-    display.rotate(True)
-    display.fill(0)
-    display.text('Entering deep-', 0, 0, 1)
-    display.text('sleep. Press', 0, 12, 1)
-    display.text('reset to wake', 0, 24, 1)
-    display.show()
-    print("Entering Deep Sleep. Press Reset to wake") #print to screen
-    sleep(3)
     np[0] = reset
     np.write()
     display.poweroff()
@@ -147,7 +130,8 @@ wm = WifiManager()
 reset_np()
 show_logo()
 wm.connect()
-if wm.is_connected() == True:
+while True:
+    if wm.is_connected():
         sleep(3)
         print_nw_info()
         sleep(3)
@@ -158,3 +142,11 @@ if wm.is_connected() == True:
         print('Connected!')
         sleep(3)
         press_action()
+        break
+    else:
+        print('Disconnected!')
+        display.rotate(True)
+        display.fill(0)
+        display.text('Disonnected!', 0, 16, 1)
+        display.show()
+    time.sleep(10)
